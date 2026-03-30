@@ -40,17 +40,17 @@ export function DigestCard({ title, summary, url, source, stats, variant = "news
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block py-4 border-b border-[var(--color-border)] last:border-b-0 group"
+      className="block py-5 border-b border-[var(--color-border)] last:border-b-0 group"
     >
       <div className="flex items-start justify-between gap-3 mb-1.5">
         <h3 className="text-[15px] font-semibold text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
           {title}
         </h3>
-        <span className="shrink-0 text-[11px] px-1.5 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-muted)]">
+        <span className="shrink-0 text-[12px] px-2 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-muted)] font-medium">
           {source}
         </span>
       </div>
-      <p className="text-[13px] text-[var(--color-muted)] leading-relaxed">{summary}</p>
+      <p className="text-[13px] text-[var(--color-muted)] leading-relaxed mt-1">{summary}</p>
     </a>
   );
 }
@@ -70,11 +70,11 @@ export function GithubCard({ name, description, url, stars, todayStars, language
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center justify-between gap-4 py-2.5 border-b border-[var(--color-border)] last:border-b-0 group"
+      className="flex items-start justify-between gap-4 py-4 border-b border-[var(--color-border)] last:border-b-0 group"
     >
       <div className="min-w-0">
         <div className="flex items-center gap-2">
-          <h3 className="text-[13px] font-mono font-medium text-[var(--color-foreground)] group-hover:text-[var(--color-accent)] transition-colors truncate">
+          <h3 className="text-[14px] font-mono font-medium text-[var(--color-foreground)] group-hover:text-[var(--color-accent)] transition-colors truncate">
             {name}
           </h3>
           {language && (
