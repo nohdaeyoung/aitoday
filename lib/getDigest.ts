@@ -46,11 +46,7 @@ export async function getDigestByDate(date: string): Promise<{
 
 export async function getArchiveDates(): Promise<string[]> {
   const db = getDb();
-  const snapshot = await db
-    .collection("digests")
-    .orderBy("__name__", "desc")
-    .limit(90)
-    .get();
-
-  return snapshot.docs.map((doc) => doc.id);
+  const snapshot = await db.collection("digests").get();
+  const ids = snapshot.docs.map((doc) => doc.id);
+  return ids.sort().reverse().slice(0, 90);
 }
