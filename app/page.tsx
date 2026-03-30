@@ -1,5 +1,6 @@
 import { getLatestDigest } from "@/lib/getDigest";
 import { DigestTabs } from "@/components/DigestTabs";
+import Link from "next/link";
 
 export const revalidate = 21600;
 
@@ -70,13 +71,21 @@ export default async function Home() {
 function Header({ date }: { date: string }) {
   return (
     <header className="mb-8 pt-6">
-      <div className="flex items-baseline gap-3">
-        <h1 className="text-[22px] font-bold tracking-tight text-[var(--color-foreground)]">
-          AI Today
-        </h1>
-        <span className="text-[12px] text-[var(--color-accent)] font-medium">
-          {date}
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-baseline gap-3">
+          <h1 className="text-[22px] font-bold tracking-tight text-[var(--color-foreground)]">
+            AI Today
+          </h1>
+          <span className="text-[12px] text-[var(--color-accent)] font-medium">
+            {date}
+          </span>
+        </div>
+        <Link
+          href="/archive"
+          className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors"
+        >
+          아카이브
+        </Link>
       </div>
       <p className="text-[13px] text-[var(--color-muted)] mt-1">
         글로벌 AI 뉴스를 한국어로

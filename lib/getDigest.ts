@@ -6,14 +6,12 @@ export async function getLatestDigest(): Promise<{
   date: string;
   period: string;
 }> {
-  // 오늘 날짜 (KST)
   const kstNow = new Date(Date.now() + 9 * 60 * 60 * 1000);
   const today = kstNow.toISOString().split("T")[0];
   const yesterday = new Date(kstNow.getTime() - 24 * 60 * 60 * 1000)
     .toISOString()
     .split("T")[0];
 
-  // 오늘 문서 확인
   const db = getDb();
   const todayDoc = await db.collection("digests").doc(today).get();
   if (todayDoc.exists) {
@@ -22,7 +20,6 @@ export async function getLatestDigest(): Promise<{
     if (data.morning) return { digest: data.morning as DigestDoc, date: today, period: "morning" };
   }
 
-  // 어제 문서 확인
   const yesterdayDoc = await db.collection("digests").doc(yesterday).get();
   if (yesterdayDoc.exists) {
     const data = yesterdayDoc.data()!;
@@ -31,4 +28,29 @@ export async function getLatestDigest(): Promise<{
   }
 
   return { digest: null, date: today, period: "morning" };
+}
+
+export async function getDigestByDate(date: string): Promise<{
+  morning: DigestDoc | null;
+  evening: DigestDoc | null;
+}> {
+  const db = getDb();
+  const doc = await db.collection("digests").doc(date).get();
+  if (!doc.exists) return { morning: null, evening: null };
+  const data = doc.data()!;
+  return {
+    morning: (data.morning as DigestDoc) || null,
+    evening: (data.evening as DigestDoc) || null,
+  };
+}
+
+export async function getArchiveDates(): Promise<string[]> {
+  const db = getDb();
+  const snapshot = await db
+    .collection("digests")
+    .orderBy("__name__", "desc")
+    .limit(90)
+    .get();
+
+  return snapshot.docs.map((doc) => doc.id);
 }
