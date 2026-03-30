@@ -1,65 +1,151 @@
-import Image from "next/image";
+import { getLatestDigest } from "@/lib/getDigest";
+import { DigestCard, GithubCard } from "@/components/DigestCard";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+export const revalidate = 21600;
+
+export default async function Home() {
+  let digest, date, period;
+
+  try {
+    const result = await getLatestDigest();
+    digest = result.digest;
+    date = result.date;
+    period = result.period;
+  } catch {
+    digest = null;
+    date = new Date().toISOString().split("T")[0];
+    period = "morning";
+  }
+
+  if (!digest) {
+    return (
+      <main className="max-w-[640px] mx-auto px-5 py-16">
+        <Header date={date} />
+        <div className="py-20">
+          <p className="text-lg text-[var(--color-foreground)]">
+            오늘의 다이제스트를 준비하고 있습니다.
+          </p>
+          <p className="text-sm text-[var(--color-muted)] mt-2">
+            매일 오전 7시, 오후 7시에 새로운 AI 소식이 도착합니다.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
       </main>
+    );
+  }
+
+  return (
+    <main className="max-w-[640px] mx-auto px-5 py-8">
+      <Header date={date} />
+
+      {digest.weather && (
+        <section className="mb-10 py-5 px-5 -mx-5 bg-[var(--color-accent-light)] border-y border-[var(--color-accent)]/20">
+          <p className="text-[11px] font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-2">
+            AI Weather
+          </p>
+          <p className="text-[17px] text-[var(--color-foreground)] leading-relaxed font-medium">
+            {digest.weather}
+          </p>
+        </section>
+      )}
+
+      {digest.news.length > 0 && (
+        <section className="mb-10">
+          <SectionHeader label="NEWS" title="AI 뉴스 다이제스트" />
+          <div>
+            {digest.news.map((item, i) => (
+              <DigestCard
+                key={i}
+                title={item.title}
+                summary={item.summary}
+                url={item.url}
+                source={item.source}
+                variant="news"
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {digest.community.length > 0 && (
+        <section className="mb-10">
+          <SectionHeader label="COMMUNITY" title="커뮤니티 핫 아티클" />
+          <div>
+            {digest.community.map((item, i) => (
+              <DigestCard
+                key={i}
+                title={item.title}
+                summary={item.summary}
+                url={item.url}
+                source={item.source}
+                variant="community"
+                stats={[
+                  ...(item.upvotes ? [{ label: "↑", value: item.upvotes }] : []),
+                  ...(item.comments ? [{ label: "💬", value: item.comments }] : []),
+                ]}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {digest.github.length > 0 && (
+        <section className="mb-10">
+          <SectionHeader label="TRENDING" title="GitHub 트렌딩" />
+          <div>
+            {digest.github.map((item, i) => (
+              <GithubCard
+                key={i}
+                name={item.name}
+                description={item.description}
+                url={item.url}
+                stars={item.stars}
+                todayStars={item.todayStars}
+                language={item.language}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <footer className="pt-8 pb-12 border-t border-[var(--color-border)]">
+        <p className="text-[12px] text-[var(--color-muted)]">
+          AI Today / {date} {period === "morning" ? "오전" : "오후"} 에디션
+        </p>
+        <p className="text-[11px] text-[var(--color-muted)] mt-1">
+          매일 오전 7시 · 오후 7시 자동 업데이트
+        </p>
+      </footer>
+    </main>
+  );
+}
+
+function Header({ date }: { date: string }) {
+  return (
+    <header className="mb-8 pt-6">
+      <div className="flex items-baseline gap-3">
+        <h1 className="text-[22px] font-bold tracking-tight text-[var(--color-foreground)]">
+          AI Today
+        </h1>
+        <span className="text-[12px] text-[var(--color-accent)] font-medium">
+          {date}
+        </span>
+      </div>
+      <p className="text-[13px] text-[var(--color-muted)] mt-1">
+        글로벌 AI 뉴스를 한국어로
+      </p>
+    </header>
+  );
+}
+
+function SectionHeader({ label, title }: { label: string; title: string }) {
+  return (
+    <div className="mb-4">
+      <p className="text-[10px] font-semibold tracking-[0.15em] text-[var(--color-accent)] uppercase">
+        {label}
+      </p>
+      <h2 className="text-[17px] font-semibold text-[var(--color-foreground)] mt-0.5">
+        {title}
+      </h2>
     </div>
   );
 }
