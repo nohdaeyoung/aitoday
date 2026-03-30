@@ -58,15 +58,16 @@ export async function GET(request: NextRequest) {
   const allItems: RawItem[] = [];
   const deadline = Date.now() + 200_000; // 200초 워치독
 
-  // 4개 소스 병렬 수집
+  // 5개 소스 병렬 수집
   const results = await Promise.allSettled([
     collectHN(),
     collectCommunity(),
     collectGithub(),
     collectRSS(),
+    collectPapers(),
   ]);
 
-  const sourceNames = ["hn", "community", "github", "rss"] as const;
+  const sourceNames = ["hn", "community", "github", "rss", "papers"] as const;
   results.forEach((result, i) => {
     const name = sourceNames[i];
     if (result.status === "fulfilled") {
@@ -156,5 +157,6 @@ export async function GET(request: NextRequest) {
     newsCount: digest.news.length,
     communityCount: digest.community.length,
     githubCount: digest.github.length,
+    papersCount: digest.papers?.length ?? 0,
   });
 }
