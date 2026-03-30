@@ -40,13 +40,15 @@ function buildUserPrompt(items: RawItem[]): string {
 {
   "news": [10개 뉴스 — { "title": "한국어 제목", "summary": "2-3문장 한국어 요약", "url": "원문URL", "source": "출처명" }],
   "community": [10개 커뮤니티 핫 글 — { "title": "한국어 제목", "summary": "2-3문장 요약 + 왜 화제인지", "url": "원문URL", "source": "출처명", "upvotes": 숫자, "comments": 숫자 }],
-  "github": [10개 GitHub 프로젝트 — { "name": "프로젝트명", "description": "한국어 설명 (이 프로젝트가 뭘 하는지, 왜 주목받는지)", "url": "GitHub URL", "stars": 총별수, "todayStars": 오늘별수, "language": "언어" }]
+  "github": [10개 GitHub 프로젝트 — { "name": "프로젝트명", "description": "한국어 설명 (이 프로젝트가 뭘 하는지, 왜 주목받는지)", "url": "GitHub URL", "stars": 총별수, "todayStars": 오늘별수, "language": "언어" }],
+  "papers": [5-10개 AI 논문 — { "title": "한국어 제목", "summary": "이 논문의 핵심 기여와 왜 중요한지 2-3문장", "url": "논문URL", "authors": "주요 저자 1-3명", "source": "ArXiv/HuggingFace 등" }]
 }
 
 분류 기준:
 - news: AI 모델 릴리즈, 기업 발표, 연구 돌파구, 규제/정책, 투자/인수, 제품 출시. 출처가 다양하도록 (같은 매체 3개 이상 금지).
 - community: HN/Lobsters/DEV.to 등에서 토론이 활발하거나 반응이 좋은 글. 기술적 인사이트, 의견, 경험담 중심.
 - github: 트렌딩 오픈소스 프로젝트. 설명에 "이 도구로 뭘 할 수 있는지"를 반드시 포함.
+- papers: AI 연구 논문. 새로운 모델 아키텍처, 학습 기법, 벤치마크, 안전 연구 등. 제목은 원문 영어를 한국어로 자연스럽게 의역. 요약은 "이 논문이 왜 중요한지"를 반드시 포함.
 
 중복 아이템은 하나만 선택하세요. 최대한 다양한 출처에서 골라주세요.
 

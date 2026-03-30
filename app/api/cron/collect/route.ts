@@ -5,6 +5,7 @@ import { collectHN } from "@/lib/collectors/hn";
 import { collectCommunity } from "@/lib/collectors/community";
 import { collectGithub } from "@/lib/collectors/github";
 import { collectRSS } from "@/lib/collectors/rss";
+import { collectPapers } from "@/lib/collectors/papers";
 import { generateDigest } from "@/lib/claude";
 import type { RawItem, DigestDoc } from "@/lib/schema";
 
@@ -37,8 +38,9 @@ export async function GET(request: NextRequest) {
       collectCommunity(),
       collectGithub(),
       collectRSS(),
+      collectPapers(),
     ]);
-    const sourceNames = ["hn", "community", "github", "rss"] as const;
+    const sourceNames = ["hn", "community", "github", "rss", "papers"] as const;
     const diag = sourceNames.map((name, i) => {
       const r = results[i];
       return {

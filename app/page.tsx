@@ -52,6 +52,7 @@ export default async function Home() {
         news={digest.news}
         community={digest.community}
         github={digest.github}
+        papers={digest.papers}
       />
 
       <footer className="pt-8 pb-12 border-t border-[var(--color-border)]">

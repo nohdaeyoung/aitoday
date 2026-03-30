@@ -34,6 +34,15 @@ export const GithubItemSchema = z.object({
   language: z.string().optional(),
 });
 
+// Claude API 응답 — 논문 아이템
+export const PaperItemSchema = z.object({
+  title: z.string(),
+  summary: z.string(),
+  url: z.string().url(),
+  authors: z.string().optional(),
+  source: z.string(),
+});
+
 // Claude API 전체 응답
 export const DigestOutputSchema = z.object({
   weather: z.string().optional(), // Phase 3
@@ -43,6 +52,7 @@ export const DigestOutputSchema = z.object({
   news: z.array(DigestItemSchema),
   community: z.array(CommunityItemSchema),
   github: z.array(GithubItemSchema),
+  papers: z.array(PaperItemSchema).optional(),
 });
 export type DigestOutput = z.infer<typeof DigestOutputSchema>;
 

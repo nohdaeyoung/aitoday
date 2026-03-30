@@ -31,10 +31,8 @@ const AI_NEWS_FEEDS: RSSFeed[] = [
   { name: "Microsoft AI", url: "https://blogs.microsoft.com/ai/feed/", category: "research" },
   { name: "NVIDIA AI", url: "https://blogs.nvidia.com/feed/", category: "research" },
 
-  // 연구/논문
+  // 연구 (논문은 papers.ts에서 별도 수집)
   { name: "Papers With Code", url: "https://paperswithcode.com/latest/feed", category: "research" },
-  { name: "ArXiv cs.AI", url: "https://rss.arxiv.org/rss/cs.AI", category: "research" },
-  { name: "ArXiv cs.CL", url: "https://rss.arxiv.org/rss/cs.CL", category: "research" },
 
   // VC/인사이트
   { name: "a16z AI", url: "https://a16z.com/feed/", category: "ai-specialized" },
