@@ -1,22 +1,31 @@
-import { getLatestDigest } from "@/lib/getDigest";
 import { DigestTabs } from "@/components/DigestTabs";
 import Link from "next/link";
 
 export const revalidate = 21600;
 
-export default async function Home() {
-  let digest, date, period;
-
-  try {
-    const result = await getLatestDigest();
-    digest = result.digest;
-    date = result.date;
-    period = result.period;
-  } catch {
-    digest = null;
-    date = new Date().toISOString().split("T")[0];
-    period = "morning";
+async function getDigestData() {
+  if (process.env.NODE_ENV === "development") {
+    const { mockDigest } = await import("@/lib/mock-digest");
+    return {
+      digest: mockDigest as any,
+      date: new Date().toISOString().split("T")[0],
+      period: "morning",
+    };
   }
+  try {
+    const { getLatestDigest } = await import("@/lib/getDigest");
+    return await getLatestDigest();
+  } catch {
+    return {
+      digest: null,
+      date: new Date().toISOString().split("T")[0],
+      period: "morning",
+    };
+  }
+}
+
+export default async function Home() {
+  const { digest, date, period } = await getDigestData();
 
   if (!digest) {
     return (
