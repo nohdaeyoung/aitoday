@@ -22,10 +22,22 @@ const AI_NEWS_FEEDS: RSSFeed[] = [
   { name: "The Batch", url: "https://www.deeplearning.ai/the-batch/feed/", category: "ai-specialized" },
   { name: "Import AI", url: "https://importai.substack.com/feed", category: "ai-specialized" },
 
-  // 연구/모델 릴리즈
+  // AI 기업 공식 블로그
+  { name: "OpenAI", url: "https://openai.com/news/rss.xml", category: "research" },
+  { name: "Anthropic", url: "https://www.anthropic.com/rss.xml", category: "research" },
+  { name: "Google DeepMind", url: "https://deepmind.google/blog/rss.xml", category: "research" },
   { name: "Google AI Blog", url: "https://blog.google/technology/ai/rss/", category: "research" },
   { name: "Meta AI", url: "https://ai.meta.com/blog/rss/", category: "research" },
+  { name: "Microsoft AI", url: "https://blogs.microsoft.com/ai/feed/", category: "research" },
+  { name: "NVIDIA AI", url: "https://blogs.nvidia.com/feed/", category: "research" },
+
+  // 연구/논문
   { name: "Papers With Code", url: "https://paperswithcode.com/latest/feed", category: "research" },
+  { name: "ArXiv cs.AI", url: "https://rss.arxiv.org/rss/cs.AI", category: "research" },
+  { name: "ArXiv cs.CL", url: "https://rss.arxiv.org/rss/cs.CL", category: "research" },
+
+  // VC/인사이트
+  { name: "a16z AI", url: "https://a16z.com/feed/", category: "ai-specialized" },
 ];
 
 const AI_KEYWORDS = [
