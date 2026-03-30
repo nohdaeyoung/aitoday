@@ -1,5 +1,5 @@
 import { getLatestDigest } from "@/lib/getDigest";
-import { DigestCard, GithubCard } from "@/components/DigestCard";
+import { DigestTabs } from "@/components/DigestTabs";
 
 export const revalidate = 21600;
 
@@ -48,64 +48,11 @@ export default async function Home() {
         </section>
       )}
 
-      {digest.news.length > 0 && (
-        <section className="mb-10">
-          <SectionHeader label="NEWS" title="AI 뉴스 다이제스트" />
-          <div>
-            {digest.news.map((item, i) => (
-              <DigestCard
-                key={i}
-                title={item.title}
-                summary={item.summary}
-                url={item.url}
-                source={item.source}
-                variant="news"
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {digest.community.length > 0 && (
-        <section className="mb-10">
-          <SectionHeader label="COMMUNITY" title="커뮤니티 핫 아티클" />
-          <div>
-            {digest.community.map((item, i) => (
-              <DigestCard
-                key={i}
-                title={item.title}
-                summary={item.summary}
-                url={item.url}
-                source={item.source}
-                variant="community"
-                stats={[
-                  ...(item.upvotes ? [{ label: "↑", value: item.upvotes }] : []),
-                  ...(item.comments ? [{ label: "💬", value: item.comments }] : []),
-                ]}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {digest.github.length > 0 && (
-        <section className="mb-10">
-          <SectionHeader label="TRENDING" title="GitHub 트렌딩" />
-          <div>
-            {digest.github.map((item, i) => (
-              <GithubCard
-                key={i}
-                name={item.name}
-                description={item.description}
-                url={item.url}
-                stars={item.stars}
-                todayStars={item.todayStars}
-                language={item.language}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      <DigestTabs
+        news={digest.news}
+        community={digest.community}
+        github={digest.github}
+      />
 
       <footer className="pt-8 pb-12 border-t border-[var(--color-border)]">
         <p className="text-[12px] text-[var(--color-muted)]">
@@ -137,15 +84,3 @@ function Header({ date }: { date: string }) {
   );
 }
 
-function SectionHeader({ label, title }: { label: string; title: string }) {
-  return (
-    <div className="mb-4">
-      <p className="text-[10px] font-semibold tracking-[0.15em] text-[var(--color-accent)] uppercase">
-        {label}
-      </p>
-      <h2 className="text-[17px] font-semibold text-[var(--color-foreground)] mt-0.5">
-        {title}
-      </h2>
-    </div>
-  );
-}
