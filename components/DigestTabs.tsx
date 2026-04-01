@@ -58,12 +58,35 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
     papers: papers.length,
   };
 
+  function handleKeyDown(e: React.KeyboardEvent) {
+    const idx = TABS.findIndex((t) => t.id === active);
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      const next = TABS[(idx + 1) % TABS.length];
+      setActive(next.id);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      const prev = TABS[(idx - 1 + TABS.length) % TABS.length];
+      setActive(prev.id);
+    }
+  }
+
   return (
     <div>
-      <div className="flex gap-1 border-b border-[var(--color-border)] mb-6">
+      <div
+        role="tablist"
+        aria-label="콘텐츠 카테고리"
+        className="flex gap-1 border-b border-[var(--color-border)] mb-6"
+        onKeyDown={handleKeyDown}
+      >
         {TABS.map((tab) => (
           <button
             key={tab.id}
+            role="tab"
+            id={`tab-${tab.id}`}
+            aria-selected={active === tab.id}
+            aria-controls={`panel-${tab.id}`}
+            tabIndex={active === tab.id ? 0 : -1}
             onClick={() => setActive(tab.id)}
             className={`
               px-4 py-3 text-[14px] font-medium transition-colors relative
@@ -83,7 +106,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
       </div>
 
       {active === "news" && (
-        <div>
+        <div role="tabpanel" id="panel-news" aria-labelledby="tab-news">
           {news.map((item, i) => (
             <DigestCard
               key={i}
@@ -98,7 +121,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
       )}
 
       {active === "community" && (
-        <div>
+        <div role="tabpanel" id="panel-community" aria-labelledby="tab-community">
           {community.map((item, i) => (
             <DigestCard
               key={i}
@@ -117,7 +140,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
       )}
 
       {active === "trending" && (
-        <div>
+        <div role="tabpanel" id="panel-trending" aria-labelledby="tab-trending">
           {github.map((item, i) => (
             <GithubCard
               key={i}
@@ -133,7 +156,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
       )}
 
       {active === "papers" && (
-        <div>
+        <div role="tabpanel" id="panel-papers" aria-labelledby="tab-papers">
           {papers.map((item, i) => (
             <a
               key={i}
