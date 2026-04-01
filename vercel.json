@@ -8,5 +8,8 @@
       "path": "/api/cron/collect",
       "schedule": "0 10 * * *"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": false
+  }
 }
