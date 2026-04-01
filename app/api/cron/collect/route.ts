@@ -120,14 +120,15 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Firestore 저장
-  const now = new Date();
-  const dateKey = now.toISOString().split("T")[0]; // YYYY-MM-DD
-  const period = now.getHours() < 15 ? "morning" : "evening"; // KST 기준 (UTC+9)
+  // Firestore 저장 (KST 기준)
+  const kstNow = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  const dateKey = kstNow.toISOString().split("T")[0]; // KST YYYY-MM-DD
+  const kstHour = kstNow.getUTCHours();
+  const period = kstHour < 15 ? "morning" : "evening";
 
   const doc: DigestDoc = {
     ...digest,
-    generatedAt: now.toISOString(),
+    generatedAt: new Date().toISOString(),
     sourceStatus,
   };
 
