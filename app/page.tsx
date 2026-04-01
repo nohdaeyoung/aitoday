@@ -85,6 +85,12 @@ function Header({ date }: { date: string }) {
             검색
           </Link>
           <Link
+            href="/community"
+            className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors py-2"
+          >
+            커뮤니티
+          </Link>
+          <Link
             href="/archive"
             className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors py-2"
           >
