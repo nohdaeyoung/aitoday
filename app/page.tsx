@@ -1,5 +1,6 @@
 import { DigestTabs } from "@/components/DigestTabs";
-import { TopicTrends } from "@/components/TopicTrends";
+import { WeatherSection } from "@/components/WeatherSection";
+import { PageFooter } from "@/components/PageFooter";
 import Link from "next/link";
 
 export const revalidate = 21600;
@@ -49,19 +50,7 @@ export default async function Home() {
       <Header date={date} />
 
       {digest.weather && (
-        <section className="mb-10 py-5 px-5 -mx-5 bg-[var(--color-accent-light)] border-y border-[var(--color-accent)]/20">
-          <p className="text-[11px] font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-2">
-            AI Weather
-          </p>
-          <p className="text-[17px] text-[var(--color-foreground)] leading-relaxed font-medium">
-            {digest.weather}
-          </p>
-          {digest.topicTrends && (
-            <div className="mt-4 pt-4 border-t border-[var(--color-accent)]/10">
-              <TopicTrends trends={digest.topicTrends} />
-            </div>
-          )}
-        </section>
+        <WeatherSection weather={digest.weather} topicTrends={digest.topicTrends} />
       )}
 
       <DigestTabs
@@ -71,14 +60,7 @@ export default async function Home() {
         papers={digest.papers}
       />
 
-      <footer className="pt-8 pb-12 border-t border-[var(--color-border)]">
-        <p className="text-[12px] text-[var(--color-muted)]">
-          AI Today / {date} {period === "morning" ? "오전" : "오후"} 에디션
-        </p>
-        <p className="text-[11px] text-[var(--color-muted)] mt-1">
-          매일 오전 7시 · 오후 7시 자동 업데이트
-        </p>
-      </footer>
+      <PageFooter date={date} period={period} />
     </main>
   );
 }
