@@ -77,12 +77,20 @@ function Header({ date }: { date: string }) {
             {date}
           </span>
         </div>
-        <Link
-          href="/archive"
-          className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors py-2 px-3 -mr-3"
-        >
-          아카이브
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/search"
+            className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors py-2"
+          >
+            검색
+          </Link>
+          <Link
+            href="/archive"
+            className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors py-2"
+          >
+            아카이브
+          </Link>
+        </div>
       </div>
       <p className="text-[13px] text-[var(--color-muted)] mt-1">
         글로벌 AI 뉴스를 한국어로
