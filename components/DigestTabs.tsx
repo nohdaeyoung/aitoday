@@ -53,6 +53,7 @@ type TabId = (typeof TABS)[number]["id"];
 
 export function DigestTabs({ news, community, github, papers = [] }: DigestTabsProps) {
   const [active, setActive] = useState<TabId>("news");
+  const [langFilter, setLangFilter] = useState<string>("all");
 
   const counts: Record<TabId, number> = {
     news: news.length,
@@ -144,21 +145,52 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
         </div>
       )}
 
-      {active === "trending" && (
-        <div role="tabpanel" id="panel-trending" aria-labelledby="tab-trending">
-          {github.map((item, i) => (
-            <GithubCard
-              key={i}
-              name={item.name}
-              description={item.description}
-              url={item.url}
-              stars={item.stars}
-              todayStars={item.todayStars}
-              language={item.language}
-            />
-          ))}
-        </div>
-      )}
+      {active === "trending" && (() => {
+        const languages = [...new Set(github.map((g) => g.language).filter(Boolean))] as string[];
+        const filtered = langFilter === "all" ? github : github.filter((g) => g.language === langFilter);
+        return (
+          <div role="tabpanel" id="panel-trending" aria-labelledby="tab-trending">
+            {languages.length > 1 && (
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                <button
+                  onClick={() => setLangFilter("all")}
+                  className={`text-[12px] px-2.5 py-1 rounded-full transition-colors ${
+                    langFilter === "all"
+                      ? "bg-[var(--color-accent)] text-white"
+                      : "bg-[var(--color-surface)] text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+                  }`}
+                >
+                  전체 {github.length}
+                </button>
+                {languages.map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLangFilter(lang)}
+                    className={`text-[12px] px-2.5 py-1 rounded-full transition-colors ${
+                      langFilter === lang
+                        ? "bg-[var(--color-accent)] text-white"
+                        : "bg-[var(--color-surface)] text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+                    }`}
+                  >
+                    {lang} {github.filter((g) => g.language === lang).length}
+                  </button>
+                ))}
+              </div>
+            )}
+            {filtered.map((item, i) => (
+              <GithubCard
+                key={i}
+                name={item.name}
+                description={item.description}
+                url={item.url}
+                stars={item.stars}
+                todayStars={item.todayStars}
+                language={item.language}
+              />
+            ))}
+          </div>
+        );
+      })()}
 
       {active === "papers" && (
         <div role="tabpanel" id="panel-papers" aria-labelledby="tab-papers">
