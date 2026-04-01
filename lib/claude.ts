@@ -77,7 +77,7 @@ export async function generateDigest(items: RawItem[]): Promise<DigestOutput> {
   const response = await Promise.race([
     client.messages.create({
       model: "claude-sonnet-4-20250514",
-      max_tokens: 8192,
+      max_tokens: 16384,
       system: SYSTEM_PROMPT,
       messages: [
         {
