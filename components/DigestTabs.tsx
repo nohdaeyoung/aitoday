@@ -74,7 +74,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
             `}
           >
             {tab.label}
-            <span className="ml-1.5 text-[11px] opacity-60">{counts[tab.id]}</span>
+            <span className="ml-1 text-[11px] opacity-50 tabular-nums">{counts[tab.id]}</span>
             {active === tab.id && (
               <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-accent)]" />
             )}
@@ -148,7 +148,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
               {item.authors && (
                 <p className="text-[12px] text-[var(--color-muted)] mt-1">{item.authors}</p>
               )}
-              <p className="text-[13px] text-[var(--color-muted)] leading-relaxed mt-1.5">{item.summary}</p>
+              <p className="text-[14px] text-[var(--color-muted)] leading-relaxed mt-1.5">{item.summary}</p>
               <span className="inline-block text-[11px] text-[var(--color-accent)] mt-2 opacity-70">{item.source}</span>
             </a>
           ))}

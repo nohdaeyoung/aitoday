@@ -21,7 +21,7 @@ export function DigestCard({ title, summary, url, source, stats, variant = "news
           <h3 className="text-[17px] font-medium text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
             {title}
           </h3>
-          <p className="text-[13px] text-[var(--color-muted)] leading-relaxed mt-1 line-clamp-2">{summary}</p>
+          <p className="text-[14px] text-[var(--color-muted)] leading-relaxed mt-1 line-clamp-2">{summary}</p>
           <div className="flex items-center gap-3 mt-1.5">
             <span className="text-[11px] text-[var(--color-muted)]">{source}</span>
             {stats?.map((s) => (
@@ -50,7 +50,7 @@ export function DigestCard({ title, summary, url, source, stats, variant = "news
           {source}
         </span>
       </div>
-      <p className="text-[13px] text-[var(--color-muted)] leading-relaxed mt-1">{summary}</p>
+      <p className="text-[14px] text-[var(--color-muted)] leading-relaxed mt-1">{summary}</p>
     </a>
   );
 }
