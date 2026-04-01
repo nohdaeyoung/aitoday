@@ -38,11 +38,22 @@ function buildUserPrompt(items: RawItem[]): string {
   return `아래 ${items.length}개 아이템을 분석하고, 다음 JSON 형식으로 응답하세요:
 
 {
+  "weather": "오늘의 AI 분위기를 날씨 예보처럼 한 문장으로 (예: 'LLM 가격전쟁이 심화되고, 오픈소스 멀티모달 모델이 급부상하는 하루.')",
+  "topicTrends": { "LLM": 0-10, "Vision": 0-10, "Agent": 0-10, "OpenSource": 0-10, "Regulation": 0-10, "Hardware": 0-10 },
   "news": [10개 뉴스 — { "title": "한국어 제목", "summary": "2-3문장 한국어 요약", "url": "원문URL", "source": "출처명" }],
   "community": [10개 커뮤니티 핫 글 — { "title": "한국어 제목", "summary": "2-3문장 요약 + 왜 화제인지", "url": "원문URL", "source": "출처명", "upvotes": 숫자, "comments": 숫자 }],
   "github": [10개 GitHub 프로젝트 — { "name": "프로젝트명", "description": "한국어 설명 (이 프로젝트가 뭘 하는지, 왜 주목받는지)", "url": "GitHub URL", "stars": 총별수, "todayStars": 오늘별수, "language": "언어" }],
   "papers": [5-10개 AI 논문 — { "title": "한국어 제목", "summary": "이 논문의 핵심 기여와 왜 중요한지 2-3문장", "url": "논문URL", "authors": "주요 저자 1-3명", "source": "ArXiv/HuggingFace 등" }]
 }
+
+weather 작성 규칙:
+- 오늘 수집된 아이템 전체를 종합해 AI 업계의 분위기를 한 문장으로 요약
+- 날씨 예보 말투로 ("~하는 하루", "~이 몰아치는 하루", "~이 잠잠한 가운데 ~이 부상")
+- 구체적 키워드 2-3개 포함 (모델명, 기업명, 기술 트렌드 등)
+
+topicTrends 작성 규칙:
+- 오늘 아이템 중 해당 토픽에 관련된 비율을 0-10으로 점수화
+- 0=언급 없음, 10=오늘의 지배적 토픽
 
 분류 기준:
 - news: AI 모델 릴리즈, 기업 발표, 연구 돌파구, 규제/정책, 투자/인수, 제품 출시. 출처가 다양하도록 (같은 매체 3개 이상 금지).

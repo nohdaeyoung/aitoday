@@ -1,5 +1,6 @@
 import { getDigestByDate } from "@/lib/getDigest";
 import { DigestTabs } from "@/components/DigestTabs";
+import { TopicTrends } from "@/components/TopicTrends";
 import Link from "next/link";
 
 export const revalidate = 21600;
@@ -71,6 +72,11 @@ export default async function DatePage({ params }: Props) {
           <p className="text-[17px] text-[var(--color-foreground)] leading-relaxed font-medium">
             {digest.weather}
           </p>
+          {digest.topicTrends && (
+            <div className="mt-4 pt-4 border-t border-[var(--color-accent)]/10">
+              <TopicTrends trends={digest.topicTrends} />
+            </div>
+          )}
         </section>
       )}
 
