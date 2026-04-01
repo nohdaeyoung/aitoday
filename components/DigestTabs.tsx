@@ -66,7 +66,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
             key={tab.id}
             onClick={() => setActive(tab.id)}
             className={`
-              px-4 py-2.5 text-[14px] font-medium transition-colors relative
+              px-4 py-3 text-[14px] font-medium transition-colors relative
               ${active === tab.id
                 ? "text-[var(--color-accent)]"
                 : "text-[var(--color-muted)] hover:text-[var(--color-foreground)]"

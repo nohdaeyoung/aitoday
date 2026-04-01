@@ -97,7 +97,7 @@ function Header({ date }: { date: string }) {
         </div>
         <Link
           href="/archive"
-          className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors"
+          className="text-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] transition-colors py-2 px-3 -mr-3"
         >
           아카이브
         </Link>
