@@ -142,7 +142,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
               rel="noopener noreferrer"
               className="block py-5 border-b border-[var(--color-border)] last:border-b-0 group"
             >
-              <h3 className="text-[15px] font-semibold text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
+              <h3 className="text-[17px] font-semibold text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
                 {item.title}
               </h3>
               {item.authors && (

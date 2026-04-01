@@ -18,7 +18,7 @@ export function DigestCard({ title, summary, url, source, stats, variant = "news
       >
         <div className="shrink-0 mt-1 w-1 h-8 rounded-full bg-[var(--color-accent)] opacity-40 group-hover:opacity-100 transition-opacity" />
         <div className="min-w-0">
-          <h3 className="text-[15px] font-medium text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
+          <h3 className="text-[17px] font-medium text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
             {title}
           </h3>
           <p className="text-[13px] text-[var(--color-muted)] leading-relaxed mt-1 line-clamp-2">{summary}</p>
@@ -43,7 +43,7 @@ export function DigestCard({ title, summary, url, source, stats, variant = "news
       className="block py-5 border-b border-[var(--color-border)] last:border-b-0 group"
     >
       <div className="flex items-start justify-between gap-3 mb-1.5">
-        <h3 className="text-[15px] font-semibold text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
+        <h3 className="text-[17px] font-semibold text-[var(--color-foreground)] leading-snug group-hover:text-[var(--color-accent)] transition-colors">
           {title}
         </h3>
         <span className="shrink-0 text-[12px] px-2 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-muted)] font-medium">
@@ -74,7 +74,7 @@ export function GithubCard({ name, description, url, stars, todayStars, language
     >
       <div className="min-w-0">
         <div className="flex items-center gap-2">
-          <h3 className="text-[14px] font-mono font-medium text-[var(--color-foreground)] group-hover:text-[var(--color-accent)] transition-colors truncate">
+          <h3 className="text-[15px] font-mono font-medium text-[var(--color-foreground)] group-hover:text-[var(--color-accent)] transition-colors truncate">
             {name}
           </h3>
           {language && (
