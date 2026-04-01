@@ -16,6 +16,7 @@ export const DigestItemSchema = z.object({
   summary: z.string(),
   url: z.string().url(),
   source: z.string(),
+  tags: z.array(z.string()).optional(),
 });
 
 // Claude API 응답 — 커뮤니티 아이템
@@ -32,6 +33,7 @@ export const GithubItemSchema = z.object({
   stars: z.number(),
   todayStars: z.number().optional(),
   language: z.string().optional(),
+  tags: z.array(z.string()).optional(),
 });
 
 // Claude API 응답 — 논문 아이템
@@ -41,6 +43,7 @@ export const PaperItemSchema = z.object({
   url: z.string().url(),
   authors: z.string().optional(),
   source: z.string(),
+  tags: z.array(z.string()).optional(),
 });
 
 // Claude API 전체 응답

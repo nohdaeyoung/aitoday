@@ -8,6 +8,7 @@ interface NewsItem {
   summary: string;
   url: string;
   source: string;
+  tags?: string[];
 }
 
 interface CommunityItem extends NewsItem {
@@ -22,6 +23,7 @@ interface GithubItem {
   stars: number;
   todayStars?: number;
   language?: string;
+  tags?: string[];
 }
 
 interface PaperItem {
@@ -30,6 +32,7 @@ interface PaperItem {
   url: string;
   authors?: string;
   source: string;
+  tags?: string[];
 }
 
 interface DigestTabsProps {
@@ -114,6 +117,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
               summary={item.summary}
               url={item.url}
               source={item.source}
+              tags={item.tags}
               variant="news"
             />
           ))}
@@ -130,6 +134,7 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
               url={item.url}
               source={item.source}
               variant="community"
+              tags={item.tags}
               stats={[
                 ...(item.upvotes ? [{ label: "↑", value: item.upvotes }] : []),
                 ...(item.comments ? [{ label: "💬", value: item.comments }] : []),
@@ -172,7 +177,18 @@ export function DigestTabs({ news, community, github, papers = [] }: DigestTabsP
                 <p className="text-[12px] text-[var(--color-muted)] mt-1">{item.authors}</p>
               )}
               <p className="text-[14px] text-[var(--color-muted)] leading-relaxed mt-1.5">{item.summary}</p>
-              <span className="inline-block text-[11px] text-[var(--color-accent)] mt-2 opacity-70">{item.source}</span>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-[11px] text-[var(--color-accent)] opacity-70">{item.source}</span>
+                {item.tags && item.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {item.tags.map((tag) => (
+                      <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-muted)]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </a>
           ))}
           {papers.length === 0 && (

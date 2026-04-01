@@ -4,10 +4,11 @@ interface DigestCardProps {
   url: string;
   source: string;
   stats?: { label: string; value: string | number }[];
+  tags?: string[];
   variant?: "news" | "community";
 }
 
-export function DigestCard({ title, summary, url, source, stats, variant = "news" }: DigestCardProps) {
+export function DigestCard({ title, summary, url, source, stats, tags, variant = "news" }: DigestCardProps) {
   if (variant === "community") {
     return (
       <a
@@ -30,6 +31,15 @@ export function DigestCard({ title, summary, url, source, stats, variant = "news
               </span>
             ))}
           </div>
+          {tags && tags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {tags.map((tag) => (
+                <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-muted)]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </a>
     );
@@ -51,6 +61,15 @@ export function DigestCard({ title, summary, url, source, stats, variant = "news
         </span>
       </div>
       <p className="text-[14px] text-[var(--color-muted)] leading-relaxed mt-1">{summary}</p>
+      {tags && tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {tags.map((tag) => (
+            <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-muted)]">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </a>
   );
 }
