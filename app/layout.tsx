@@ -15,6 +15,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AI Today - 오늘의 AI 뉴스",
   description: "글로벌 AI 뉴스, 커뮤니티 핫 아티클, GitHub 트렌딩을 한국어로 매일 큐레이션합니다.",
+  metadataBase: new URL("https://aitoday.324.ing"),
+  openGraph: {
+    title: "AI Today - 오늘의 AI 뉴스",
+    description: "글로벌 AI 뉴스, 커뮤니티 핫 아티클, GitHub 트렌딩을 한국어로 매일 큐레이션합니다.",
+    url: "https://aitoday.324.ing",
+    siteName: "AI Today",
+    locale: "ko_KR",
+    type: "website",
+    images: [{ url: "/api/og", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Today - 오늘의 AI 뉴스",
+    description: "글로벌 AI 뉴스를 한국어로 매일 큐레이션",
+    images: ["/api/og"],
+  },
 };
 
 export default function RootLayout({
