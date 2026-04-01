@@ -26,10 +26,8 @@ export default async function DatePage({ params }: Props) {
   }
 
   const { morning, evening } = await getDigestByDate(date);
-  const digest = evening || morning;
-  const period = evening ? "evening" : "morning";
 
-  if (!digest) {
+  if (!morning && !evening) {
     return (
       <main className="max-w-[640px] mx-auto px-5 py-16">
         <Nav />
@@ -40,6 +38,11 @@ export default async function DatePage({ params }: Props) {
       </main>
     );
   }
+
+  const editions = [
+    ...(evening ? [{ digest: evening, period: "evening" as const, label: "오후 에디션" }] : []),
+    ...(morning ? [{ digest: morning, period: "morning" as const, label: "오전 에디션" }] : []),
+  ];
 
   return (
     <main className="max-w-[640px] mx-auto px-5 py-8">
@@ -53,23 +56,40 @@ export default async function DatePage({ params }: Props) {
             {date}
           </span>
         </div>
-        <p className="text-[13px] text-[var(--color-muted)] mt-1">
-          {period === "morning" ? "오전" : "오후"} 에디션
-        </p>
+        {editions.length === 1 && (
+          <p className="text-[13px] text-[var(--color-muted)] mt-1">
+            {editions[0].label}
+          </p>
+        )}
       </header>
 
-      {digest.weather && (
-        <WeatherSection weather={digest.weather} topicTrends={digest.topicTrends} />
-      )}
+      {editions.map(({ digest, period, label }, idx) => (
+        <section key={period}>
+          {editions.length > 1 && (
+            <div className={`flex items-center gap-3 ${idx > 0 ? "mt-12 pt-8 border-t border-[var(--color-border)]" : ""} mb-6`}>
+              <h2 className="text-[17px] font-semibold text-[var(--color-foreground)]">
+                {label}
+              </h2>
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--color-surface)] text-[var(--color-muted)] font-medium">
+                {period === "evening" ? "오후 7시" : "오전 7시"}
+              </span>
+            </div>
+          )}
 
-      <DigestTabs
-        news={digest.news}
-        community={digest.community}
-        github={digest.github}
-        papers={digest.papers}
-      />
+          {digest.weather && (
+            <WeatherSection weather={digest.weather} topicTrends={digest.topicTrends} />
+          )}
 
-      <PageFooter date={date} period={period} showArchiveLink />
+          <DigestTabs
+            news={digest.news}
+            community={digest.community}
+            github={digest.github}
+            papers={digest.papers}
+          />
+        </section>
+      ))}
+
+      <PageFooter date={date} period={editions[0].period} showArchiveLink />
     </main>
   );
 }
